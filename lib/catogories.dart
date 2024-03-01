@@ -13,7 +13,7 @@ class _Product_ListState extends State<Product_List> {
 
 
   List name = ["Best Seller","Top Trending", "New Arrival", "Upcoming", "Sale"];
-  List image = ["images/laptop 1.jpg","images/laptop 2.jpg","images/laptop 3.jpg","images/laptop 4.jpg","images/laptop 5.jpg"];
+  List image = ["images/laptop 1.jpg","images/laptop 2.jpg","images/laptop 3.jpg","images/laptop 4.jpg","images/laptop 5.jpg","images/laptop 6.jpg","images/laptop 7.jpg","images/laptop 8.jpg"];
 
   int currentIndex = 0;
 
