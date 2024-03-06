@@ -1,99 +1,144 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-
-class Product_List extends StatefulWidget {
-  const Product_List({super.key});
-
-  @override
-  State<Product_List> createState() => _Product_ListState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _Product_ListState extends State<Product_List> {
-
-
-  List name = ["Best Seller","Top Trending", "New Arrival", "Upcoming", "Sale"];
-  List image = ["images/laptop 1.jpg","images/laptop 2.jpg","images/laptop 3.jpg","images/laptop 4.jpg","images/laptop 5.jpg","images/laptop 6.jpg","images/laptop 7.jpg","images/laptop 8.jpg"];
-
-  int currentIndex = 0;
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text('Categories',style: GoogleFonts.merriweather(
-          fontWeight: FontWeight.bold,
-          fontSize: 25,
-          color: Colors.black,
-        ),),
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_outlined,color: Colors.black),
-            onPressed: (){
-            }),
-        actions: [
-          Icon(Icons.tune_outlined, color: Colors.black,),
-          SizedBox(
-            width: 10,
-          )
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
+  }
+}
 
-        ],
-      ),
-      body: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ListView.builder(
-                itemCount: name.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-                  return GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                    child: Container(
-                      width: 120,
-                      height: 60,
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        color: currentIndex == index ? Colors.black : Colors.transparent,
-                      ),child: Text(name[index],style: TextStyle(color: currentIndex == index ? Colors.white : Colors.black)),
-                    ),
-                  );
-                },),
-            ),
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              scrollDirection: Axis.vertical,
-              physics: const ScrollPhysics(),
-              children: List.generate(image.length, (index) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(image[index]),),
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(14),
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Builder(builder: (context) => IconButton(onPressed: (){
+                      Scaffold.of(context).openDrawer();
+                    }, icon: const Icon(Icons.list)),),
+
+                    const CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.blue,
+                    )
+                  ],
                 ),
-                width: 60,
-                height: 60,
-              )),)
-          ],
+
+                const SizedBox(height: 20,),
+
+                const SearchBar(
+                  backgroundColor: MaterialStatePropertyAll(Colors.white),
+                  hintText: "Search...",
+                  trailing: [Icon(Icons.search, color: Colors.blue,)],
+                ),
+
+                const SizedBox(height: 20,),
+
+                const Text("Categories", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 16),),
+
+                const SizedBox(height: 20,),
+
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Nike", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 14),),
+                    Text("Addidas", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 14),),
+                    Text("Puma", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 14),),
+                  ],
+                ),
+
+                const SizedBox(height: 20,),
+
+                GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  shrinkWrap: true,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 200/250,
+                  children: List.generate(10, (index) {
+                    return Container(
+                      width: 160,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade400,
+                                spreadRadius: 1,
+                                blurRadius: 10
+                            )
+                          ]
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                            width: double.infinity,
+                            height: 120,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                image: const DecorationImage(image: AssetImage('images/shoe.jpg'))
+                            ),
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("\$180", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 14),),
+                                  Icon(Icons.favorite)
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            margin: const EdgeInsets.only(left: 6),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("Puma", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600,fontSize: 14),),
+                                const Text("Puma", style: TextStyle(color: Colors.black,fontWeight: FontWeight.w400,fontSize: 12),),
+
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },),)
+
+              ],
+            ),
+          ),
         ),
       ),
     );
